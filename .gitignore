@@ -1,0 +1,5 @@
+node_modules
+config/bbdd.config.js
+adapters
+src/auth/secret.js
+src/auth/auth.utils.js
