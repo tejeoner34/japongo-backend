@@ -39,8 +39,24 @@ export async function addComment(id, comment){
         const db = client.db('JaponGo');
         const courses = db.collection('Courses');
         const i = await courses.updateOne({"_id":ObjectId(id)},{$push:{comments:comment}}, {upsert:true});  
-        console.log(i);
-        return i      
+        const comments = await courses.findOne({"_id":ObjectId(id)});
+        return comments      
+    }catch(err){
+        console.log(err);
+    }finally{
+        await client.close();
+    }
+};
+
+
+export async function deleteComment(id, comment){
+    try{
+        await client.connect();
+        const db = client.db('JaponGo');
+        const courses = db.collection('Courses');
+        const i = await courses.updateOne({"_id":ObjectId(id)},{$pull:{comments:comment}}, {upsert:true});  
+        const comments = await courses.findOne({"_id":ObjectId(id)});
+        return comments      
     }catch(err){
         console.log(err);
     }finally{

@@ -4,7 +4,7 @@
 // import { generatePrimeSync } from "crypto";
 // import { generateRandomEmailToken } from "../auth/auth.utils.js";
 
-import { getElementbyID } from "./users-model.js"
+import { addFav, deleteFav, findFav, getElementbyID } from "./users-model.js"
 
 
 // //generamos un token con el secreto y el email del usuario. Introducido por el login
@@ -60,4 +60,21 @@ export const retrieveuserInfo= async(req, res)=>{
     res.json(userinfo)
 
 
+};
+
+export async function postFavController(req, res){
+    const favExists = await findFav(req.body.email, req.body.course);
+    if(favExists===null){
+        const user = await addFav(req.body.email, req.body.course);
+        delete user.password;
+        res.json(user);
+    }else{
+        res.send('fav already exists')
+    }
+    
+};
+
+export async function deleteFavController(req, res){
+    const user = await deleteFav(req.body.email, req.body.course);
+    res.json(user);
 }

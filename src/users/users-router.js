@@ -1,14 +1,19 @@
 import express from 'express';
-import { retrieveuserInfo } from './users-controller.js';
+import { deleteFavController, postFavController, retrieveuserInfo } from './users-controller.js';
 import { validateJWTAuth } from '../auth/auth.middleware.js';
 
 
 const router = express.Router();
 
 
-router.use(validateJWTAuth);
+// router.use(validateJWTAuth);
 router.route('/')
+    .all(validateJWTAuth)
     .get(retrieveuserInfo)
+
+router.route('/fav')
+    .post(postFavController)
+    .patch(deleteFavController)
 
 export default router;
 

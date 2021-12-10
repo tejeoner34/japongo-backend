@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 export const validateJWTAuth = (req, res, next) => {
     // Obtener el token JWT de la cabecera Authorization
     const headerAuth = req.get('Authorization'); // Bearer jwtStringToken
-    console.log(headerAuth)
+    
     // Separo el tipo de autenticación de su valor
     const jwtToken = headerAuth?.split(' ')[1]; // Obtengo solo el valor del JWT
     // Validar el JWT, si no se puede validar, se lanza un excepcion

@@ -78,4 +78,48 @@ export async function emailVerification(email){
         await client.close();
 
     }
+};
+
+export async function findFav (email, course){
+    try{
+        await client.connect();
+        const db = client.db('JaponGo');
+        const users = db.collection('Users');
+        const user = await users.findOne({email, favs:course});
+        return user      
+    }catch(err){
+        console.log(err);
+    }finally{
+        await client.close();
+    }
+}
+
+export async function addFav(email, course){
+    try{
+        await client.connect();
+        const db = client.db('JaponGo');
+        const users = db.collection('Users');
+        const i = await users.updateOne({email},{$push:{favs:course}}, {upsert:true});  
+        const user = await users.findOne({email});
+        return user      
+    }catch(err){
+        console.log(err);
+    }finally{
+        await client.close();
+    }
+};
+
+export async function deleteFav(email, course){
+    try{
+        await client.connect();
+        const db = client.db('JaponGo');
+        const users = db.collection('Users');
+        const i = await users.updateOne({email},{$pull:{favs:course}}, {upsert:true});  
+        const user = await users.findOne({email});
+        return user      
+    }catch(err){
+        console.log(err);
+    }finally{
+        await client.close();
+    }
 }
