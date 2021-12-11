@@ -139,3 +139,17 @@ export async function deleteFav(email, course){
         await client.close();
     }
 }
+
+export async function deleteOneUser(email){
+    try{
+        await client.connect();
+        const db = client.db('JaponGo');
+        const users = db.collection('Users');
+        const deleted = await users.findOneAndDelete({email});  
+        return deleted      
+    }catch(err){
+        console.log(err);
+    }finally{
+        await client.close();
+    }
+}

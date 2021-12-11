@@ -1,6 +1,7 @@
 import express from 'express';
-import { deleteFavController, postFavController, retrieveuserInfo } from './users-controller.js';
+import { deleteFavController, deleteOneUserController, postFavController, retrieveuserInfo } from './users-controller.js';
 import { validateJWTAuth } from '../auth/auth.middleware.js';
+import { checkPasswordMiddleware } from './user.middleware.js';
 
 
 const router = express.Router();
@@ -8,9 +9,9 @@ const router = express.Router();
 
 // router.use(validateJWTAuth);
 router.route('/')
-    .all(validateJWTAuth)
-    .get(retrieveuserInfo)
-    // .delete()
+    // .all(validateJWTAuth)
+    .get(validateJWTAuth, retrieveuserInfo)
+    .delete(checkPasswordMiddleware, deleteOneUserController)
 
 router.route('/fav')
     .post(postFavController)
