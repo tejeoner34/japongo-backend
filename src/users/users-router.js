@@ -10,6 +10,7 @@ const router = express.Router();
 router.route('/')
     .all(validateJWTAuth)
     .get(retrieveuserInfo)
+    // .delete()
 
 router.route('/fav')
     .post(postFavController)

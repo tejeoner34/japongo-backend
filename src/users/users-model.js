@@ -33,6 +33,22 @@ export async function createOneUSer(user){
     }
 }
 
+export async function getUserByEmailOrName(name, email){
+    try{
+        await client.connect();
+        const db = client.db('JaponGo');
+        const users = db.collection('Users');
+        const exists = await users.findOne({$or: [{email, status:'SUCCESS'},{name, status:'SUCCESS'}]});
+        return exists
+
+    }catch(err){
+        console.log(err)
+    }finally{
+        await client.close();
+
+    }
+}
+
 export async function getElementbyID(email){
     try{
         await client.connect();
