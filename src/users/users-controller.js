@@ -4,7 +4,8 @@
 // import { generatePrimeSync } from "crypto";
 // import { generateRandomEmailToken } from "../auth/auth.utils.js";
 
-import { addFav, deleteFav, deleteOneUser, findFav, getElementbyID } from "./users-model.js"
+import { encondePassword } from "../auth/auth.utils.js";
+import { addFav, deleteFav, deleteOneUser, findFav, getElementbyID, updatePass } from "./users-model.js"
 
 
 // //generamos un token con el secreto y el email del usuario. Introducido por el login
@@ -82,4 +83,16 @@ export async function deleteFavController(req, res){
 export async function deleteOneUserController(req, res){
     const deleted = await deleteOneUser(req.body.email);
     res.status(200).json('deleted')
+}
+
+export async function updatePassController(req, res){
+    const {email, newPassword} = req.body;
+    const encondedPass = encondePassword(newPassword);
+    const updated = await updatePass(email, encondedPass);
+    if(updated===undefined){
+        res.status(500)
+    }else{
+        res.status(201).json('Password Updated')
+
+    } 
 }

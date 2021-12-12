@@ -152,4 +152,18 @@ export async function deleteOneUser(email){
     }finally{
         await client.close();
     }
+};
+
+export async function updatePass(email, password){
+    try{
+        await client.connect();
+        const db = client.db('JaponGo');
+        const users = db.collection('Users');
+        const updated = await users.updateOne({email},{$set: {password}}, {upsert:true});  
+        return updated      
+    }catch(err){
+        console.log(err);
+    }finally{
+        await client.close();
+    }
 }
