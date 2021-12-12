@@ -33,6 +33,22 @@ export async function createOneUSer(user){
     }
 }
 
+export async function getUserByEmailOrName(name, email){
+    try{
+        await client.connect();
+        const db = client.db('JaponGo');
+        const users = db.collection('Users');
+        const exists = await users.findOne({$or: [{email, status:'SUCCESS'},{name, status:'SUCCESS'}]});
+        return exists
+
+    }catch(err){
+        console.log(err)
+    }finally{
+        await client.close();
+
+    }
+}
+
 export async function getElementbyID(email){
     try{
         await client.connect();
@@ -117,6 +133,20 @@ export async function deleteFav(email, course){
         const i = await users.updateOne({email},{$pull:{favs:course}}, {upsert:true});  
         const user = await users.findOne({email});
         return user      
+    }catch(err){
+        console.log(err);
+    }finally{
+        await client.close();
+    }
+}
+
+export async function deleteOneUser(email){
+    try{
+        await client.connect();
+        const db = client.db('JaponGo');
+        const users = db.collection('Users');
+        const deleted = await users.findOneAndDelete({email});  
+        return deleted      
     }catch(err){
         console.log(err);
     }finally{
