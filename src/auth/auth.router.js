@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.route('/login')
     .post(sendToken)
+    
 
 
 router.route('/register')
@@ -14,5 +15,8 @@ router.route('/register')
     
 router.route('/validate')
     .get(validateUserController)
+
+// router.route('/reset-password')
+//     .post()
 
 export default router;

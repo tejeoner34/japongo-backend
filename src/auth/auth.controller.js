@@ -74,3 +74,4 @@ export async function validateUserController(req, res) {
         res.status(400).send('invalid token')
     }
 }
+
