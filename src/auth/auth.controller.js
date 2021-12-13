@@ -1,4 +1,4 @@
-import { retrieveUsers, createOneUSer, getElementbyID, getElementByIdAndPassword, emailVerification, getUserByEmailOrName } from "../users/users-model.js";
+import { retrieveUsers, createOneUSer, getElementbyID, getElementByIdAndPassword, emailVerification, getUserByEmailOrName, updatePass } from "../users/users-model.js";
 import jwt from 'jsonwebtoken';
 import { secret } from "./secret.js";
 import { encondePassword, generateRandomEmailToken } from "../auth/auth.utils.js";
@@ -73,5 +73,31 @@ export async function validateUserController(req, res) {
     } else {
         res.status(400).send('invalid token')
     }
+}
+
+export async function sendResetPasswordEmail(req, res){
+
+    const user = await getElementbyID(req.body.email);
+    console.log(req.body.email)
+    if(user === null){
+        res.status(403).json('user does not exist')
+    }else{
+       const token=  generateToken(req.body.email);
+        sendMail(req.body.email, 'To change your password please click in this link', `<a href="http://localhost:3000/reset-password?token=${token}">Reset Password</a>`)
+        res.status(201).json('ok');
+    }
+}
+
+export async function createNewpass(req, res){
+    const {password} = req.body;
+    console.log(password)
+    const encondedPass = encondePassword(password);
+    const updated = await updatePass(req.email, encondedPass);
+    if(updated===undefined){
+        res.status(500)
+    }else{
+        res.status(201).json('Password Updated')
+
+    } 
 }
 

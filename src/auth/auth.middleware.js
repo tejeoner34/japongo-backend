@@ -22,3 +22,19 @@ export const validateJWTAuth = (req, res, next) => {
     }
     
 }
+
+export const validateJWTResetPassword = (req, res, next)=>{
+    const token = req.query.token;
+
+    try{
+        const jwtDecoded = jwt.verify(token, secret);
+        
+        req.email = jwtDecoded;
+        next();
+    }catch(err){
+        console.log(err);
+        res.status(401).send('Invalid token');
+    }
+
+
+}
