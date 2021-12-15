@@ -21,11 +21,11 @@ export async function retrieveAccommodations(){
 export async function retrieveAccommodationByLocation(latitude, longitude){
     try{
 
-       
-        console.log(latitudeMinus)
-        console.log(latitudePlus)
-        console.log(longitudePlus)
-        console.log(longitudeMinus)
+        const latitudePlus = latitude + 0.05;
+        const latitudeMinus = latitude - 0.05;
+        const longitudePlus = longitude + 0.05;
+        const longitudeMinus = longitude - 0.05;
+        
         await client.connect();
         const db = client.db('JaponGo');
         const accommodations = db.collection('Accommodations');
