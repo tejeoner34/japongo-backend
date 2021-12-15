@@ -64,13 +64,13 @@ export const retrieveuserInfo= async(req, res)=>{
 };
 
 export async function postFavController(req, res){
-    const favExists = await findFav(req.body.email, req.body.course);
+    const favExists = await findFav(req.body.email, req.body.course.name);
     if(favExists===null){
         const user = await addFav(req.body.email, req.body.course);
         delete user.password;
-        res.json(user);
+        res.status(200).json(user);
     }else{
-        res.send('fav already exists')
+        res.status(403).json('fav already exists')
     }
     
 };

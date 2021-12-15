@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import {URI} from '../../config/bbdd.config.js';
 
 const client = new MongoClient(URI);
@@ -101,7 +101,7 @@ export async function findFav (email, course){
         await client.connect();
         const db = client.db('JaponGo');
         const users = db.collection('Users');
-        const user = await users.findOne({email, favs:course});
+        const user = await users.findOne({email, "favs.name":course});
         return user      
     }catch(err){
         console.log(err);
