@@ -6,6 +6,7 @@ import { registerToken, validateToken } from "./auth.model.js";
 import { sendMail } from "../adapters/mail.js";
 
 
+
 //generamos un token con el secreto y el email del usuario. Introducido por el login
 function generateToken(email) {
     return jwt.sign(email, secret);
@@ -40,11 +41,13 @@ export async function getAllUsers(req, res) {
 }
 
 
+
 // funcion que nos promete crear un usuario en la base de datos si se cumple la validación de no existir
 export const createUser = async (req, res) => {
 
     const { email, password, name } = req.body;
-
+    const file = req.file;
+    const body = req.body;
     const foundUser = await getUserByEmailOrName(name, email);
 
 
@@ -52,7 +55,7 @@ export const createUser = async (req, res) => {
 
         req.body.password = encondePassword(password);
 
-        await createOneUSer(req.body);
+        await createOneUSer({...body, file});
         const tokenEmailVerfication = generateRandomEmailToken();
         await registerToken(tokenEmailVerfication, email);
         sendMail(email, 'Verifica tu cuenta para seguir con el registro', `<a href="http://localhost:3000/validate-mail?token=${tokenEmailVerfication}">Verificar</a>`)

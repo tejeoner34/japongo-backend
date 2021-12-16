@@ -4,7 +4,10 @@ import { validateJWTAuth } from '../auth/auth.middleware.js';
 import { checkPasswordMiddleware } from './user.middleware.js';
 
 
+
 const router = express.Router();
+
+
 
 
 // router.use(validateJWTAuth);
