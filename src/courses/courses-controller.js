@@ -1,4 +1,4 @@
-import { addComment, deleteComment, retrieveAllCourses, retrieveCourseById } from "./courses-model.js";
+import { addComment, deleteComment, deleteOneUserComments, retrieveAllCourses, retrieveCourseById } from "./courses-model.js";
 
 export async function getAllCourses(req, res){
     const courses = await retrieveAllCourses();
@@ -20,4 +20,10 @@ export async function deleteCommentController(req, res){
   
   const data = await deleteComment(req.query.id, req.body.comment);
   res.json(data);
+}
+
+export async function deleteOneUserCommentsController(req,res){
+  const name = req.body.name;
+  const x = await deleteOneUserComments(name);
+  res.status(204).json('deleted')
 }

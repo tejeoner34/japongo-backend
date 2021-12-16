@@ -63,3 +63,17 @@ export async function deleteComment(id, comment){
         await client.close();
     }
 }
+
+
+export async function deleteOneUserComments(name){
+    try{
+        await client.connect();
+        const db = client.db('JaponGo');
+        const courses = db.collection('Courses');
+        const i = await courses.updateMany({},{$pull:{comments:{name:name}}}, {upsert:true});  
+    }catch(err){
+        console.log(err);
+    }finally{
+        await client.close();
+    }
+}
