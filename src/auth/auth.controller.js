@@ -45,6 +45,8 @@ export async function getAllUsers(req, res) {
 // funcion que nos promete crear un usuario en la base de datos si se cumple la validación de no existir
 export const createUser = async (req, res) => {
 
+
+    const profileBackgroundImg = 'profile-background.jpg';
     const { email, password, name } = req.body;
     const file = req.file;
     const body = req.body;
@@ -55,7 +57,7 @@ export const createUser = async (req, res) => {
 
         req.body.password = encondePassword(password);
 
-        await createOneUSer({...body, file});
+        await createOneUSer({...body, file, profileBackgroundImg });
         const tokenEmailVerfication = generateRandomEmailToken();
         await registerToken(tokenEmailVerfication, email);
         sendMail(email, 'Verifica tu cuenta para seguir con el registro', `<a href="http://localhost:3000/validate-mail?token=${tokenEmailVerfication}">Verificar</a>`)
