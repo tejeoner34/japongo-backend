@@ -5,7 +5,7 @@
 // import { generateRandomEmailToken } from "../auth/auth.utils.js";
 
 import { encondePassword } from "../auth/auth.utils.js";
-import { addFav, deleteFav, deleteOneUser, findFav, getElementbyID, updatePass } from "./users-model.js"
+import { addFav, deleteFav, deleteOneUser, findFav, getElementbyID, updateAvatar, updateBackgroundImg, updatePass } from "./users-model.js"
 
 
 // //generamos un token con el secreto y el email del usuario. Introducido por el login
@@ -93,6 +93,30 @@ export async function updatePassController(req, res){
         res.status(500)
     }else{
         res.status(201).json('Password Updated')
+
+    } 
+}
+
+export async function updateAvatarController(req,res){
+    const name = req.body.name;
+    const file = req.file;
+    const updated = await updateAvatar(name, file);
+    if(updated===undefined){
+        res.status(500)
+    }else{
+        res.status(201).json(updated)
+
+    } 
+};
+
+export async function updateBackgroundImgController(req,res){
+    const name= req.body.name;
+    const profileBackgroundImg = req.file.filename;
+    const updated = await updateBackgroundImg(name, profileBackgroundImg);
+    if(updated===undefined){
+        res.status(500)
+    }else{
+        res.status(201).json(updated)
 
     } 
 }

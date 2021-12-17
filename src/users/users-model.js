@@ -167,3 +167,34 @@ export async function updatePass(email, password){
         await client.close();
     }
 }
+
+
+export async function updateAvatar(name, file){
+    try{
+        await client.connect();
+        const db = client.db('JaponGo');
+        const users = db.collection('Users');
+        const updated = await users.updateOne({name},{$set: {file}}, {upsert:true});  
+        const updatedUser = await users.findOne({name})
+        return updatedUser      
+    }catch(err){
+        console.log(err);
+    }finally{
+        await client.close();
+    }
+};
+
+export async function updateBackgroundImg(name, profileBackgroundImg){
+    try{
+        await client.connect();
+        const db = client.db('JaponGo');
+        const users = db.collection('Users');
+        const updated = await users.updateOne({name},{$set: {profileBackgroundImg}}, {upsert:true});  
+        const updatedUser = await users.findOne({name})
+        return updatedUser      
+    }catch(err){
+        console.log(err);
+    }finally{
+        await client.close();
+    }
+}
