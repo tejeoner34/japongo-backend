@@ -48,8 +48,10 @@ export const createUser = async (req, res) => {
 
     const profileBackgroundImg = 'profile-background.jpg';
     const { email, password, name } = req.body;
+    
     const file = req.file;
     const body = req.body;
+    delete body.repeatedPassword
     const foundUser = await getUserByEmailOrName(name, email);
 
 
