@@ -6,6 +6,7 @@ import CoursesRouter from './src/courses/courses-router.js';
 import SchoolsRouter from './src/schools/schools-router.js';
 import InfoUsersRouter from './src/infoUsers/info-users-router.js';
 import AccommodationRouter from './src/accommodation/accommodation-router.js';
+import MentionsRouter from './src/mentions/mentions-router.js';
 import cors from 'cors';
 
 
@@ -26,6 +27,7 @@ app.use('/courses', CoursesRouter);
 app.use('/schools', SchoolsRouter);
 app.use('/info', InfoUsersRouter);
 app.use('/accommodation', AccommodationRouter);
+app.use('/mentions', MentionsRouter);
 
 
 
