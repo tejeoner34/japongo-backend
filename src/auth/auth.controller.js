@@ -18,14 +18,12 @@ export const sendToken = async (req, res) => {
     const { email, password } = req.body;
     const passEncoded = encondePassword(password)
     const userinfo = await getElementByIdAndPassword(email, passEncoded);
-    console.log(userinfo);
     if (userinfo !== null) {
 
         const token = generateToken({ email: req.body.email });
-        console.log(token)
         res.json({ token, ...userinfo });
     } else {
-        res.status(404).send('Usuario/Contraseña erróneos');
+        res.status(404).json('Usuario/Contraseña erróneos');
     }
 
 
@@ -72,7 +70,6 @@ export const createUser = async (req, res) => {
 
 
 export async function validateUserController(req, res) {
-    console.log(req.query.token);
     const email = await validateToken(req.query.token);
     if (email !== null) {
         await emailVerification(email);
@@ -85,7 +82,6 @@ export async function validateUserController(req, res) {
 export async function sendResetPasswordEmail(req, res){
 
     const user = await getElementbyID(req.body.email);
-    console.log(req.body.email)
     if(user === null){
         res.status(403).json('user does not exist')
     }else{
@@ -97,7 +93,6 @@ export async function sendResetPasswordEmail(req, res){
 
 export async function createNewpass(req, res){
     const {password} = req.body;
-    console.log(password)
     const encondedPass = encondePassword(password);
     const updated = await updatePass(req.email, encondedPass);
     if(updated===undefined){
