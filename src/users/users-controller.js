@@ -55,9 +55,10 @@ import { addFav, deleteFav, deleteOneUser, findFav, getElementbyID, updateAvatar
 // }
 
 export const retrieveuserInfo= async(req, res)=>{
-
+    
     const userinfo = await getElementbyID(req.email);
     delete userinfo.password;
+   
     res.json(userinfo)
 
 
