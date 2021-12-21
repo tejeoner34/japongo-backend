@@ -27,7 +27,6 @@ export async function postOneMention(name, mention){
         const db = client.db('JaponGo');
         const users = db.collection('Users');
         const i = await users.updateOne({name},{$push:{mentions:mention}}, {upsert:false}); 
-        console.log(i)
         return i 
         // const user = await users.findOne({name});
         // return user      

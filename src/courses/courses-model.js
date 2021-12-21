@@ -70,7 +70,7 @@ export async function deleteOneUserComments(name){
         await client.connect();
         const db = client.db('JaponGo');
         const courses = db.collection('Courses');
-        const i = await courses.updateMany({},{$pull:{comments:{name:name}}}, {upsert:true});  
+        const i = await courses.updateMany({},{$pull:{comments:{name:name}}}, {upsert:true});
     }catch(err){
         console.log(err);
     }finally{

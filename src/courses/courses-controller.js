@@ -25,5 +25,5 @@ export async function deleteCommentController(req, res){
 export async function deleteOneUserCommentsController(req,res){
   const name = req.body.name;
   const x = await deleteOneUserComments(name);
-  res.status(204).json('deleted')
+  res.status(200).json('deleted')
 }

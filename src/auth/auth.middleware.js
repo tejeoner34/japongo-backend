@@ -18,7 +18,7 @@ export const validateJWTAuth = (req, res, next) => {
         next();
     }catch(err){
         console.log(err);
-        res.status(401).send('Usuario sin token válido');
+        res.status(401).json('Usuario sin token válido');
     }
     
 }

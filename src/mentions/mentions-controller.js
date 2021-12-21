@@ -17,7 +17,6 @@ export async function postMentionController(req, res){
     const {mention,name} = req.body;
 
     const modified = await postOneMention(name, mention);
-    console.log(modified.modifiedCount)
     if(modified.modifiedCount===0){
         res.json('user not found')
     }else{
