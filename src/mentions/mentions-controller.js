@@ -1,4 +1,4 @@
-import { postOneMention, retrieveMentionByName } from "./mentions-model.js";
+import { deleteMention, postOneMention, retrieveMentionByName } from "./mentions-model.js";
 
 
 export async function getMentionByNameController(req, res){
@@ -23,4 +23,10 @@ export async function postMentionController(req, res){
     }else{
         res.json('posted')
     }
+}
+
+
+export async function deleteMentionController(req, res){
+    const user = await deleteMention(req.body.name, req.body.course);
+    res.json(user);
 }

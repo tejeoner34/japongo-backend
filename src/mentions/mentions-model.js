@@ -37,3 +37,18 @@ export async function postOneMention(name, mention){
         await client.close();
     }
 }
+
+export async function deleteMention(name, mention){
+    try{
+        await client.connect();
+        const db = client.db('JaponGo');
+        const users = db.collection('Users');
+        const i = await users.updateOne({name},{$pull:{mentions:mention}}, {upsert:true});  
+        const user = await users.findOne({name});
+        return user      
+    }catch(err){
+        console.log(err);
+    }finally{
+        await client.close();
+    }
+}
