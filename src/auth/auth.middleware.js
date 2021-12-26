@@ -1,5 +1,7 @@
-import { secret } from "./secret.js";
+// import { secret } from "./secret.js";
 import jwt from 'jsonwebtoken';
+
+const secreto = process.env.SECRET 
 
 
 export const validateJWTAuth = (req, res, next) => {
@@ -10,7 +12,7 @@ export const validateJWTAuth = (req, res, next) => {
     const jwtToken = headerAuth?.split(' ')[1]; // Obtengo solo el valor del JWT
     // Validar el JWT, si no se puede validar, se lanza un excepcion
     try{
-        const jwtDecoded = jwt.verify(jwtToken, secret);
+        const jwtDecoded = jwt.verify(jwtToken, secreto);
         // para que las siguientes rutas no se tengan que preocupar
         // de validar tokens JWT, guardo el id del usuario en la req
         
@@ -27,7 +29,7 @@ export const validateJWTResetPassword = (req, res, next)=>{
     const token = req.query.token;
 
     try{
-        const jwtDecoded = jwt.verify(token, secret);
+        const jwtDecoded = jwt.verify(token, secreto);
         
         req.email = jwtDecoded;
         next();
