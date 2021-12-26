@@ -5,7 +5,7 @@ import { encondePassword, generateRandomEmailToken } from "../auth/auth.utils.js
 import { registerToken, validateToken } from "./auth.model.js";
 import { sendMail } from "../adapters/mail.js";
 
-
+const secret = process.env.SECRET || secret
 
 //generamos un token con el secreto y el email del usuario. Introducido por el login
 function generateToken(email) {
