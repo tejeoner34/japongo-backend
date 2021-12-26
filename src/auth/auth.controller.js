@@ -1,11 +1,11 @@
 import { retrieveUsers, createOneUSer, getElementbyID, getElementByIdAndPassword, emailVerification, getUserByEmailOrName, updatePass } from "../users/users-model.js";
 import jwt from 'jsonwebtoken';
-import { secret } from "./secret.js";
+// import { secret } from "./secret.js";
 import { encondePassword, generateRandomEmailToken } from "../auth/auth.utils.js";
 import { registerToken, validateToken } from "./auth.model.js";
 import { sendMail } from "../adapters/mail.js";
 
-const secreto = process.env.SECRET || secret
+const secreto = process.env.SECRET 
 
 //generamos un token con el secreto y el email del usuario. Introducido por el login
 function generateToken(email) {
