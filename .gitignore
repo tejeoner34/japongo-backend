@@ -1,5 +1,5 @@
 node_modules
 config/bbdd.config.js
-adapters
+
 src/auth/secret.js
 
