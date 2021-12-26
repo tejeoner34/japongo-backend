@@ -3,13 +3,13 @@ import jwt from 'jsonwebtoken';
 import { secret } from "./secret.js";
 import { encondePassword, generateRandomEmailToken } from "../auth/auth.utils.js";
 import { registerToken, validateToken } from "./auth.model.js";
-// import { sendMail } from "../adapters/mail.js";
+import { sendMail } from "../adapters/mail.js";
 
-const secret = process.env.SECRET 
+const secreto = process.env.SECRET || secret
 
 //generamos un token con el secreto y el email del usuario. Introducido por el login
 function generateToken(email) {
-    return jwt.sign(email, secret);
+    return jwt.sign(email, secreto);
 };
 
 
