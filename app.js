@@ -30,5 +30,5 @@ app.use('/accommodation', AccommodationRouter);
 app.use('/mentions', MentionsRouter);
 
 
-
-app.listen(4567, () => console.log('Server on'))
+const PORT = process.env.PORT || 4567
+app.listen(PORT, () => console.log('Server on', PORT))
