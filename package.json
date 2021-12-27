@@ -20,7 +20,9 @@
   },
   "homepage": "https://github.com/tejeoner34/japongo-backend#readme",
   "dependencies": {
+    "cloudinary": "^1.27.1",
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.2.1",

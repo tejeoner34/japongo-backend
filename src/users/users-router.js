@@ -4,15 +4,14 @@ import { validateJWTAuth } from '../auth/auth.middleware.js';
 import { checkPasswordMiddleware } from './user.middleware.js';
 import multer from 'multer';
 import path from 'path';
+const __dirname = path.resolve()
 
 
 
 const router = express.Router();
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'public\\img\\user-avatar')
-    },
+    destination: path.join(__dirname, 'public/avatar'),
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
     }

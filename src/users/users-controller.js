@@ -6,6 +6,9 @@
 
 import { encondePassword } from "../auth/auth.utils.js";
 import { addFav, deleteFav, deleteOneUser, findFav, getElementbyID, updateAvatar, updateBackgroundImg, updatePass } from "./users-model.js"
+import cloudinary from 'cloudinary';
+import dotenv from 'dotenv';
+dotenv.config();
 
 
 // //generamos un token con el secreto y el email del usuario. Introducido por el login
@@ -98,16 +101,40 @@ export async function updatePassController(req, res){
     } 
 }
 
-export async function updateAvatarController(req,res){
-    const name = req.body.name;
-    const file = req.file;
-    const updated = await updateAvatar(name, file);
-    if(updated===undefined){
-        res.status(500)
-    }else{
-        res.status(201).json(updated)
+cloudinary.v2.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
 
-    } 
+export async function updateAvatarController(req,res){
+
+    try{
+        const name = req.body.name;
+        console.log(name)
+        const file = req.file.path;
+        console.log(file)
+        const uploadedResponse = await cloudinary.v2.uploader.upload(file, {folder: 'AVATAR'})
+        console.log(uploadedResponse)
+        const updated = await updateAvatar(name, uploadedResponse.url)
+        if(updated === undefined){
+            res.status(500)
+        }else{
+            res.status(201).json(updated)
+        }
+    }catch (err){
+        console.log(err);
+        res.status(500)
+    }
+    // const name = req.body.name;
+    // const file = req.file;
+    // const updated = await updateAvatar(name, file);
+    // if(updated===undefined){
+    //     res.status(500)
+    // }else{
+    //     res.status(201).json(updated)
+
+    // } 
 };
 
 export async function updateBackgroundImgController(req,res){
