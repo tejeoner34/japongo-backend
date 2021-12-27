@@ -113,6 +113,7 @@ export async function updateAvatarController(req,res){
 export async function updateBackgroundImgController(req,res){
     const name= req.body.name;
     const profileBackgroundImg = req.file.filename;
+    console.log(req.file)
     const updated = await updateBackgroundImg(name, profileBackgroundImg);
     if(updated===undefined){
         res.status(500)
