@@ -111,9 +111,12 @@ export async function updateAvatarController(req,res){
 
     try{
         const name = req.body.name;
+        const imgID = req.body.imgID;
         console.log(name)
+        console.log(imgID)
         const file = req.file.path;
         console.log(file)
+        await cloudinary.v2.uploader.destroy(imgID)
         const uploadedResponse = await cloudinary.v2.uploader.upload(file, {folder: 'AVATAR'});
         const avatarInfo = {
             url: uploadedResponse.url,
@@ -146,6 +149,8 @@ export async function updateBackgroundImgController(req,res){
     try{
         const name = req.body.name;
         const file = req.file.path;
+        const imgID = req.body.imgID;
+        await cloudinary.v2.uploader.destroy(imgID)
         const uploadedResponse = await cloudinary.v2.uploader.upload(file, {folder: 'BACKGROUND'});
         const backgroundInfo = {
             url: uploadedResponse.url,
