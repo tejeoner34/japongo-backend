@@ -114,9 +114,13 @@ export async function updateAvatarController(req,res){
         console.log(name)
         const file = req.file.path;
         console.log(file)
-        const uploadedResponse = await cloudinary.v2.uploader.upload(file, {folder: 'AVATAR'})
+        const uploadedResponse = await cloudinary.v2.uploader.upload(file, {folder: 'AVATAR'});
+        const avatarInfo = {
+            url: uploadedResponse.url,
+            imgID: uploadedResponse.public_id
+        }
         console.log(uploadedResponse)
-        const updated = await updateAvatar(name, uploadedResponse.url)
+        const updated = await updateAvatar(name, avatarInfo)
         if(updated === undefined){
             res.status(500)
         }else{
@@ -138,14 +142,33 @@ export async function updateAvatarController(req,res){
 };
 
 export async function updateBackgroundImgController(req,res){
-    const name= req.body.name;
-    const profileBackgroundImg = req.file.filename;
-    console.log(req.file)
-    const updated = await updateBackgroundImg(name, profileBackgroundImg);
-    if(updated===undefined){
-        res.status(500)
-    }else{
-        res.status(201).json(updated)
 
-    } 
+    try{
+        const name = req.body.name;
+        const file = req.file.path;
+        const uploadedResponse = await cloudinary.v2.uploader.upload(file, {folder: 'BACKGROUND'});
+        const backgroundInfo = {
+            url: uploadedResponse.url,
+            imgID: uploadedResponse.public_id
+        }
+        const updated = await updateBackgroundImg(name, backgroundInfo)
+        if(updated === undefined){
+            res.status(500)
+        }else{
+            res.status(201).json(updated)
+        }
+
+    }catch (err){
+
+    }
+    // const name= req.body.name;
+    // const profileBackgroundImg = req.file.filename;
+    // console.log(req.file)
+    // const updated = await updateBackgroundImg(name, profileBackgroundImg);
+    // if(updated===undefined){
+    //     res.status(500)
+    // }else{
+    //     res.status(201).json(updated)
+
+    // } 
 }
