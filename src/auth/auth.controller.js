@@ -76,7 +76,7 @@ export const createUser = async (req, res) => {
         await createOneUSer({...body, file, profileBackgroundImg });
         const tokenEmailVerfication = generateRandomEmailToken();
         await registerToken(tokenEmailVerfication, email);
-        sendMail(email, 'Verify your email', `<a href="http://localhost:3000/validate-mail?token=${tokenEmailVerfication}">Verify my email</a>`)
+        sendMail(email, 'Verify your email', `<a href="https://tejeoner34.github.io/japongo/validate-mail?token=${tokenEmailVerfication}">Verify my email</a>`)
         //nos quedamos aqui. tenemos que mandar el email al fronto
         res.status(201).json('ok');
     } else {
@@ -102,7 +102,7 @@ export async function sendResetPasswordEmail(req, res){
         res.status(403).json('user does not exist')
     }else{
        const token=  generateToken(req.body.email);
-        sendMail(req.body.email, 'To change your password please click in this link', `<a href="http://localhost:3000/reset-password?token=${token}">Reset Password</a>`)
+        sendMail(req.body.email, 'To change your password please click in this link', `<a href="https://tejeoner34.github.io/japongo/reset-password?token=${token}">Reset Password</a>`)
         res.status(201).json('ok');
     }
 }
