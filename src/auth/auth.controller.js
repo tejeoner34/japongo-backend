@@ -4,6 +4,9 @@ import jwt from 'jsonwebtoken';
 import { encondePassword, generateRandomEmailToken } from "../auth/auth.utils.js";
 import { registerToken, validateToken } from "./auth.model.js";
 import { sendMail } from "../adapters/mail.js";
+import cloudinary from 'cloudinary';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const secreto = process.env.SECRET 
 
@@ -41,10 +44,20 @@ export async function getAllUsers(req, res) {
 
 
 // funcion que nos promete crear un usuario en la base de datos si se cumple la validación de no existir
+
+cloudinary.v2.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
+
 export const createUser = async (req, res) => {
 
 
-    const profileBackgroundImg = 'profile-background.jpg';
+    const profileBackgroundImg = {
+        url: 'https://res.cloudinary.com/dejzrr9lt/image/upload/v1640681604/BACKGROUND/profile-background_iyn2b6.jpg',
+        imgID: null
+    };
     const { email, password, name } = req.body;
     
     const file = req.file;

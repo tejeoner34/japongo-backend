@@ -150,7 +150,11 @@ export async function updateBackgroundImgController(req,res){
         const name = req.body.name;
         const file = req.file.path;
         const imgID = req.body.imgID;
-        await cloudinary.v2.uploader.destroy(imgID)
+
+        if(imgID !== null){
+            await cloudinary.v2.uploader.destroy(imgID)
+        };
+        
         const uploadedResponse = await cloudinary.v2.uploader.upload(file, {folder: 'BACKGROUND'});
         const backgroundInfo = {
             url: uploadedResponse.url,
