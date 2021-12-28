@@ -71,11 +71,11 @@ export const createUser = async (req, res) => {
         req.body.password = encondePassword(password);
 
         const uploadedResponse = await cloudinary.v2.uploader.upload(file, {folder: 'AVATAR'});
-        const avatarInfo ={
+        const file ={
             url: uploadedResponse.url,
             imgID: uploadedResponse.public_id
         }
-        await createOneUSer({...body, avatarInfo, profileBackgroundImg });
+        await createOneUSer({...body, file, profileBackgroundImg });
         const tokenEmailVerfication = generateRandomEmailToken();
         await registerToken(tokenEmailVerfication, email);
         sendMail(email, 'Verifica tu cuenta para seguir con el registro', `<a href="http://localhost:3000/validate-mail?token=${tokenEmailVerfication}">Verificar</a>`)
