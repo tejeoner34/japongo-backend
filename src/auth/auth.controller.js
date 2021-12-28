@@ -59,8 +59,6 @@ export const createUser = async (req, res) => {
         imgID: null
     };
     const { email, password, name } = req.body;
-    
-    const file = req.file.path;
     const body = req.body;
     delete body.repeatedPassword
     const foundUser = await getUserByEmailOrName(name, email);
@@ -70,7 +68,7 @@ export const createUser = async (req, res) => {
 
         req.body.password = encondePassword(password);
 
-        const uploadedResponse = await cloudinary.v2.uploader.upload(file, {folder: 'AVATAR'});
+        const uploadedResponse = await cloudinary.v2.uploader.upload(req.file.path, {folder: 'AVATAR'});
         const file ={
             url: uploadedResponse.url,
             imgID: uploadedResponse.public_id
