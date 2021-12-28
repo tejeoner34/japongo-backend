@@ -7,6 +7,8 @@ import path from 'path';
 
 const router = express.Router();
 
+const test = null
+
 // const storage = multer.diskStorage({
 //     destination : (req, file, cb)=>{
 //         cb(null, 'public\\img\\user-avatar')
