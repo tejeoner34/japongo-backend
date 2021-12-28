@@ -3,6 +3,8 @@ import { createNewpass, createUser, sendResetPasswordEmail, sendToken, validateU
 import { validateJWTResetPassword } from './auth.middleware.js';
 import multer from 'multer';
 import path from 'path';
+const __dirname = path.resolve()
+
 
 
 const router = express.Router();
@@ -20,7 +22,7 @@ const test = null
 // })
 
 const storage = multer.diskStorage({
-    destination: path.join(__dirname, 'public/avatar'),
+    destination: path.join(__dirname, 'public/profile-background'),
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
     }
