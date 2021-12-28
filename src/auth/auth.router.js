@@ -22,7 +22,7 @@ const test = null
 // })
 
 const storage = multer.diskStorage({
-    destination: path.join(__dirname, 'public/profile-background'),
+    destination: path.join(__dirname, 'public/avatar'),
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
     }

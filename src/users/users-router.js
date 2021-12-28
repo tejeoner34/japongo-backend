@@ -21,9 +21,7 @@ const upload = multer({ storage: storage })
 
 
 const storageBackgroundImg = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'public\\img\\profile-background')
-    },
+    destination: path.join(__dirname, 'public/profile-background'),
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
     }
