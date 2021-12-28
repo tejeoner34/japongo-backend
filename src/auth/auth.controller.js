@@ -76,7 +76,7 @@ export const createUser = async (req, res) => {
         await createOneUSer({...body, file, profileBackgroundImg });
         const tokenEmailVerfication = generateRandomEmailToken();
         await registerToken(tokenEmailVerfication, email);
-        sendMail(email, 'Verifica tu cuenta para seguir con el registro', `<a href="http://localhost:3000/validate-mail?token=${tokenEmailVerfication}">Verificar</a>`)
+        sendMail(email, 'Verify your email', `<a href="http://localhost:3000/validate-mail?token=${tokenEmailVerfication}">Verify my email</a>`)
         //nos quedamos aqui. tenemos que mandar el email al fronto
         res.status(201).json('ok');
     } else {

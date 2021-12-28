@@ -25,9 +25,9 @@ import nodemailer from 'nodemailer';
 
         // Creamos la conexión de transporte con nuestro servidor SMTP
         const transporter = nodemailer.createTransport({
-            host: 'smtp.ethereal.email',
-            port: 587,
-            secure: false,
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
             auth: {
                 user: user,
                 pass: pass
@@ -36,7 +36,7 @@ import nodemailer from 'nodemailer';
 
         // Creamos el mensaje, en este caso en HTML
         const message = {
-            from: 'Remitente ',
+            from: 'JaponGo <japongo.proyect@gmail.com>',
             to,
             subject,
             html: content // ponemos el contenido
