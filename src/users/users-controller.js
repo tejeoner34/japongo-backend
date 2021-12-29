@@ -57,6 +57,13 @@ dotenv.config();
 //     }
 // }
 
+cloudinary.v2.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
+
+
 export const retrieveuserInfo= async(req, res)=>{
     
     const userinfo = await getElementbyID(req.email);
@@ -80,6 +87,12 @@ export async function postFavController(req, res){
 };
 
 export async function deleteFavController(req, res){
+    const imgArray = req.body.imgArray;
+    if(imgArray[1]===null){
+        await cloudinary.v2.uploader.destroy(imgArray[0])
+    }else{
+        await cloudinary.v2.api.delete_resources(imgArray)
+    };
     const user = await deleteFav(req.body.email, req.body.course);
     res.json(user);
 }
@@ -101,11 +114,7 @@ export async function updatePassController(req, res){
     } 
 }
 
-cloudinary.v2.config({
-    cloud_name: process.env.CLOUDINARY_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-    });
+
 
 export async function updateAvatarController(req,res){
 
@@ -119,7 +128,7 @@ export async function updateAvatarController(req,res){
         await cloudinary.v2.uploader.destroy(imgID)
         const uploadedResponse = await cloudinary.v2.uploader.upload(file, {folder: 'AVATAR'});
         const avatarInfo = {
-            url: uploadedResponse.url,
+            url: uploadedResponse.secure_url,
             imgID: uploadedResponse.public_id
         }
         console.log(uploadedResponse)
@@ -154,10 +163,10 @@ export async function updateBackgroundImgController(req,res){
         if(imgID !== null){
             await cloudinary.v2.uploader.destroy(imgID)
         };
-        
+
         const uploadedResponse = await cloudinary.v2.uploader.upload(file, {folder: 'BACKGROUND'});
         const backgroundInfo = {
-            url: uploadedResponse.url,
+            url: uploadedResponse.secure_url,
             imgID: uploadedResponse.public_id
         }
         const updated = await updateBackgroundImg(name, backgroundInfo)

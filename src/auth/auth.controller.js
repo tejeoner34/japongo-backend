@@ -70,7 +70,7 @@ export const createUser = async (req, res) => {
 
         const uploadedResponse = await cloudinary.v2.uploader.upload(req.file.path, {folder: 'AVATAR'});
         const file ={
-            url: uploadedResponse.url,
+            url: uploadedResponse.secure_url,
             imgID: uploadedResponse.public_id
         }
         await createOneUSer({...body, file, profileBackgroundImg });
