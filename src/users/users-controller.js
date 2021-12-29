@@ -87,17 +87,18 @@ export async function postFavController(req, res){
 };
 
 export async function deleteFavController(req, res){
-    const imgArray = req.body.imgArray;
-    if(imgArray[1]===null){
-        await cloudinary.v2.uploader.destroy(imgArray[0])
-    }else{
-        await cloudinary.v2.api.delete_resources(imgArray)
-    };
     const user = await deleteFav(req.body.email, req.body.course);
     res.json(user);
 }
 
 export async function deleteOneUserController(req, res){
+    const imgArray = req.body.imgArray;
+    console.log(imgArray)
+    if(imgArray[1]===null){
+        await cloudinary.v2.uploader.destroy(imgArray[0])
+    }else{
+        await cloudinary.v2.api.delete_resources(imgArray)
+    };
     const deleted = await deleteOneUser(req.body.email);
     res.status(200).json('deleted')
 }
