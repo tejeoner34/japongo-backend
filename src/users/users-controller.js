@@ -93,7 +93,6 @@ export async function deleteFavController(req, res){
 
 export async function deleteOneUserController(req, res){
     const imgArray = req.body.imgArray;
-    console.log(imgArray)
     if(imgArray[1]===null){
         await cloudinary.v2.uploader.destroy(imgArray[0])
     }else{
